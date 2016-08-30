@@ -1,0 +1,26 @@
+{
+  "name": "melk/extended-login-bundle",
+  "type": "symfony-bundle",
+  "description": "Provides extended login form with captcha for several sequences failed login attempts.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Michael Potienko",
+      "email": "potienko.m@gmail.com"
+    }
+  ],
+  "require": {
+    "symfony/symfony": "~2.8",
+    "gregwar/captcha-bundle": "~2.0",
+    "snc/redis-bundle": "~1.0"
+  },
+  "autoload": {
+    "psr-0": { "Melk\\ExtendedLoginBundle": "" }
+  },
+  "target-dir": "Melk/ExtendedLoginBundle",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="melk_extended_login.service.captcha_login_service" class="Melk\ExtendedLoginBundle\Service\CaptchaLoginService">
+            <argument>%melk_extended_login.max_attempts%</argument>
+            <argument>%melk_extended_login.attempts_period%</argument>
+            <argument>%melk_extended_login.captcha_period%</argument>
+            <argument>%gregwar_captcha.config%</argument>
+            <argument type="service" id="gregwar_captcha.generator" />
+            <argument type="service" id="session" />
+        </service>
+
+        <service id="melk_extended_login.security.captcha_authentication_failure_handler" class="Melk\ExtendedLoginBundle\Security\CaptchaAuthenticationFailureHandler" abstract="true" public="false">
+            <tag name="monolog.logger" channel="security" />
+            <argument type="service" id="http_kernel" />
+            <argument type="service" id="security.http_utils" />
+            <argument type="service" id="melk_extended_login.service.captcha_login_service" />
+            <argument type="collection" /> <!-- Options -->
+            <argument type="service" id="logger" on-invalid="null" />
+        </service>
+
+        <service id="melk_extended_login.security.captcha_form_authentication_listener" class="Melk\ExtendedLoginBundle\Security\CaptchaFormAuthenticationListener" abstract="true" public="false">
+            <tag name="monolog.logger" channel="security" />
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="security.authentication.manager" />
+            <argument type="service" id="security.authentication.session_strategy" />
+            <argument type="service" id="security.http_utils" />
+            <argument />
+            <argument type="service" id="security.authentication.success_handler" />
+            <argument type="service" id="security.authentication.failure_handler" />
+            <argument type="collection" />
+            <argument type="service" id="logger" on-invalid="null" />
+            <argument type="service" id="event_dispatcher" on-invalid="null" />
+            <argument type="service" id="melk_extended_login.service.captcha_login_service" />
+        </service>
+
+    </services>
+
+</container>
