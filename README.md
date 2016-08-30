@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/dmelk/ExtendedLoginBundle.svg?branch=master)](https://travis-ci.org/dmelk/ExtendedLoginBundle)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/35937c57-6e28-4647-aa78-240d4db1f25b/mini.png)](https://insight.sensiolabs.com/projects/35937c57-6e28-4647-aa78-240d4db1f25b)
-
 ## About
 
 This bundle allows you to use extended login form with captcha when several 

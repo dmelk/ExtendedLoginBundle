@@ -20,6 +20,6 @@ class RedisClientCompilerPass implements CompilerPassInterface
         $serviceDefinition = $container->getDefinition('melk_extended_login.service.captcha_login_service');
 
         $redisClient = 'snc_redis.'.$container->getParameter('melk_extended_login.redis_client');
-        $serviceDefinition->addArgument($container->getDefinition($redisClient));
+        if ($container->hasDefinition($redisClient)) $serviceDefinition->addArgument($container->getDefinition($redisClient));
     }
 }
