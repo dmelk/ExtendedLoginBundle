@@ -1,5 +1,7 @@
 # MelkExtendedLoginBundle
 
+[![Build Status](https://travis-ci.org/dmelk/ExtendedLoginBundle.svg?branch=master)](https://travis-ci.org/dmelk/ExtendedLoginBundle)
+
 ## About
 
 This bundle allows you to use extended login form with captcha when several 
