@@ -14,6 +14,10 @@
     "gregwar/captcha-bundle": "~2.0",
     "snc/redis-bundle": "~1.0"
   },
+  "require-dev": {
+    "phake/phake": "~2.0",
+    "phpunit/phpunit": "~4.0"
+  },
   "autoload": {
     "psr-0": { "Melk\\ExtendedLoginBundle": "" }
   },
