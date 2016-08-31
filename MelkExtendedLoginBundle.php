@@ -2,7 +2,6 @@
 
 namespace Melk\ExtendedLoginBundle;
 
-use Melk\ExtendedLoginBundle\DependencyInjection\CompilerPass\RedisClientCompilerPass;
 use Melk\ExtendedLoginBundle\DependencyInjection\Security\Factory\MelkFormLoginFactory;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -23,7 +22,5 @@ class MelkExtendedLoginBundle extends Bundle
         /** @var $extension SecurityExtension */
         $extension = $container->getExtension('security');
         $extension->addSecurityListenerFactory(new MelkFormLoginFactory());
-
-        $container->addCompilerPass(new RedisClientCompilerPass());
     }
 }

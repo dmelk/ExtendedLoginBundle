@@ -3,6 +3,7 @@
 namespace Melk\ExtendedLoginBundle\Service;
 
 use Gregwar\CaptchaBundle\Generator\CaptchaGenerator;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -62,10 +63,17 @@ class CaptchaLoginService
     private $captchaGenerator;
 
     /**
-     * @var SessionInterface
+     * CaptchaLoginService constructor.
+     *
+     * @param                    $maxAttempts
+     * @param                    $attemptsPeriod
+     * @param                    $captchaPeriod
+     * @param                    $captchaConfig
+     * @param CaptchaGenerator   $captchaGenerator
+     * @param SessionInterface   $session
+     * @param                    $redis
+     * @param ContainerInterface $container
      */
-    private $session;
-
     public function __construct(
         $maxAttempts,
         $attemptsPeriod,
@@ -73,7 +81,8 @@ class CaptchaLoginService
         $captchaConfig,
         CaptchaGenerator $captchaGenerator,
         SessionInterface $session,
-        $redis)
+        $redis,
+        ContainerInterface $container)
     {
         $this->maxAttempts = $maxAttempts;
         $this->attemptsPeriod = $attemptsPeriod;
@@ -81,8 +90,13 @@ class CaptchaLoginService
         $this->captchaConfig = $captchaConfig;
         $this->captchaGenerator = $captchaGenerator;
         $this->session = $session;
-        $this->redis = $redis;
+        $this->redis = $container->get('snc_redis.'.$redis);
     }
+
+    /**
+     * @var SessionInterface
+     */
+    private $session;
 
     /**
      * Check if captcha required for current login request.

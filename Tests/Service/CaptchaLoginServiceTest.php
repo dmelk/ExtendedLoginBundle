@@ -4,6 +4,7 @@ namespace Melk\ExtendedLoginBundle\Tests\Service;
 
 use Gregwar\CaptchaBundle\Generator\CaptchaGenerator;
 use Melk\ExtendedLoginBundle\Service\CaptchaLoginService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -12,7 +13,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class CaptchaLoginServiceTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var CaptchaLoginService
      */
@@ -56,6 +56,9 @@ class CaptchaLoginServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->redis = \Phake::mock(\Redis::class);
 
+        $container = \Phake::mock(ContainerInterface::class);
+        \Phake::when($container)->get('snc_redis.captcha_login')->thenReturn($this->redis);
+
         $this->captchaService = new CaptchaLoginService(
             $this->maxAttempts,
             $this->attemptsPeriod,
@@ -63,7 +66,8 @@ class CaptchaLoginServiceTest extends \PHPUnit_Framework_TestCase
             [],
             $this->captchaGenerator,
             $this->session,
-            $this->redis
+            'captcha_login',
+            $container
         );
     }
 
@@ -102,7 +106,7 @@ class CaptchaLoginServiceTest extends \PHPUnit_Framework_TestCase
 
         \Phake::when($this->redis)->hGetAll($ip)->thenReturn(
             array(
-                $time => $time
+                $time => $time,
             )
         );
 
@@ -132,11 +136,10 @@ class CaptchaLoginServiceTest extends \PHPUnit_Framework_TestCase
 
         \Phake::when($this->redis)->hGetAll($ip)->thenReturn(
             array(
-                $time => $time
+                $time => $time,
             )
         );
 
         $this->assertTrue($this->captchaService->isCaptchaRequired($request));
     }
-
 }

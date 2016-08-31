@@ -10,7 +10,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class MelkExtendedLoginExtensionTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testConfig()
     {
         $builder = new ContainerBuilder();
@@ -24,5 +23,4 @@ class MelkExtendedLoginExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(300, $builder->getParameter('melk_extended_login.attempts_period'), 'Attempts period');
         $this->assertEquals(1800, $builder->getParameter('melk_extended_login.captcha_period'), 'Captcha period');
     }
-
 }

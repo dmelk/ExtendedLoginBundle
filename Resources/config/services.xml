@@ -12,6 +12,8 @@
             <argument>%gregwar_captcha.config%</argument>
             <argument type="service" id="gregwar_captcha.generator" />
             <argument type="service" id="session" />
+            <argument>%melk_extended_login.redis_client%</argument>
+            <argument type="service" id="service_container"/>
         </service>
 
         <service id="melk_extended_login.security.captcha_authentication_failure_handler" class="Melk\ExtendedLoginBundle\Security\CaptchaAuthenticationFailureHandler" abstract="true" public="false">
