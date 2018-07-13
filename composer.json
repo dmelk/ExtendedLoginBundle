@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "symfony/symfony": "~2.8",
+    "symfony/symfony": "~2.8|^3.0",
     "gregwar/captcha-bundle": "~2.0",
     "snc/redis-bundle": "~2.0"
   },
