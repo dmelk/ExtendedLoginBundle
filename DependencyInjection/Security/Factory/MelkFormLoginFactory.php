@@ -3,6 +3,7 @@
 namespace Melk\ExtendedLoginBundle\DependencyInjection\Security\Factory;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\FormLoginFactory;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 
@@ -42,11 +43,23 @@ class MelkFormLoginFactory extends FormLoginFactory
         $options = array_intersect_key($config, $this->defaultFailureHandlerOptions);
 
         if (isset($config['failure_handler'])) {
-            $failureHandler = $container->setDefinition($id, new DefinitionDecorator('security.authentication.custom_failure_handler'));
+            if (class_exists('Symfony\Component\DependencyInjection\ChildDefinition')) {
+                $definition = new ChildDefinition('security.authentication.custom_failure_handler');
+            } else {
+                $definition = new DefinitionDecorator('security.authentication.custom_failure_handler');
+            }
+
+            $failureHandler = $container->setDefinition($id, $definition);
             $failureHandler->replaceArgument(0, new Reference($config['failure_handler']));
             $failureHandler->replaceArgument(1, $options);
         } else {
-            $failureHandler = $container->setDefinition($id, new DefinitionDecorator('melk_extended_login.security.captcha_authentication_failure_handler'));
+            if (class_exists('Symfony\Component\DependencyInjection\ChildDefinition')) {
+                $definition = new ChildDefinition('melk_extended_login.security.captcha_authentication_failure_handler');
+            } else {
+                $definition = new DefinitionDecorator('melk_extended_login.security.captcha_authentication_failure_handler');
+            }
+
+            $failureHandler = $container->setDefinition($id, $definition);
             $failureHandler->addMethodCall('setOptions', array($options));
         }
 
